@@ -1,0 +1,10 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /apps/mush
+hooks:
+  ApplicationStart:
+   - location: restartTellaith.sh
+     timeout: 60
+     runas: ec2-user

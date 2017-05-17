@@ -30,14 +30,14 @@ function CommandTable() {
     var shortAliases = true;
 
     // add the commands and their aliases
-    this._addCmd('connect',     2, Commands.prototype.connect,  noConPlayer,  yesDconPlayer, NOshortAliases);
-    this._addCmd('create',      2, Commands.prototype.create,   noConPlayer,  yesDconPlayer, NOshortAliases);
-    this._addCmd('look',       -1, Commands.prototype.look,     yesConPlayer, noDconPlayer,  shortAliases);
-    this._addCmd('pose',        1, Commands.prototype.pose,     yesConPlayer, noDconPlayer,  shortAliases);
-    this._addCmd('quit',        0, Commands.prototype.quit,     yesConPlayer, yesDconPlayer, NOshortAliases);
-    this._addCmd('say',         1, Commands.prototype.say,      yesConPlayer, noDconPlayer,  shortAliases);
-    this._addCmd('who',         0, Commands.prototype.who,      yesConPlayer, yesDconPlayer, shortAliases);
-    this._addCmd('@describe',   0, Commands.prototype.describe, yesConPlayer, noDconPlayer,  shortAliases);
+    this._addCmd('connect',     2, Commands.prototype.connect,  noConPlayer,  yesDconPlayer, NOshortAliases, 0);
+    this._addCmd('create',      2, Commands.prototype.create,   noConPlayer,  yesDconPlayer, NOshortAliases, 0);
+    this._addCmd('look',       -1, Commands.prototype.look,     yesConPlayer, noDconPlayer,  shortAliases, 0);
+    this._addCmd('pose',        1, Commands.prototype.pose,     yesConPlayer, noDconPlayer,  shortAliases, 1);
+    this._addCmd('quit',        0, Commands.prototype.quit,     yesConPlayer, yesDconPlayer, NOshortAliases, 0);
+    this._addCmd('say',         1, Commands.prototype.say,      yesConPlayer, noDconPlayer,  shortAliases, 1);
+    this._addCmd('who',         0, Commands.prototype.who,      yesConPlayer, yesDconPlayer, shortAliases, 0);
+    this._addCmd('@describe',   0, Commands.prototype.describe, yesConPlayer, noDconPlayer,  shortAliases, 1);
     //this._addCmd('@dig',        0, Commands.prototype.dig,      yesConPlayer, noDconPlayer,  shortAliases);
 
     // additional aliases
@@ -47,6 +47,7 @@ function CommandTable() {
     this._makeAlias('quit',    'logout');
     this._makeAlias('connect', 'CONNECT');
     this._makeAlias('create',  'CREATE');
+    this._makeAlias('pose',  '@emit');
 
     // we keep the error message out of the command table, so it is not matched.
     this._error = {
@@ -68,9 +69,10 @@ function CommandTable() {
  * @param {function} funcHandler The function execution to perform the command.
  * @param {boolean} connectedCmd True if connected player can use the command.
  * @param {boolean} disconnectedCmd True if disconnected player can use the command.
+ * @param {number} Permission Level to run command.  0 = guest, 1 = player, 2 = staff, 3 = admin
  */
 CommandTable.prototype._addCmd = function(name, numArgs, funcHandler, connectedCmd, disconnectedCmd,
-                                          makeShortAliases) {
+                                          makeShortAliases, permissionHandler) {
 
     makeShortAliases = typeof makeShortAliases !== 'undefined' ? makeShortAliases : true;
     assert.ok(is.nonEmptyStr(name));
@@ -86,7 +88,8 @@ CommandTable.prototype._addCmd = function(name, numArgs, funcHandler, connectedC
         numArgs:    numArgs,
         func:       funcHandler,
         conPlayer:  connectedCmd,
-        dconPlayer: disconnectedCmd
+        dconPlayer: disconnectedCmd,
+        permissionLevel: permissionHandler
     };
 
     mush_utils.makeImmutableRecurse(cmdTab[name]);
