@@ -17,7 +17,7 @@ module.exports = setGlobalEnv;
  * @param {Function} cb A callback to signal the work is done
  */
 function connectToDb(cb) {
-    var url = 'mongodb://localhost/mush_##';
+    var url = 'mongodb://localhost/mush_production';
    mongoose.connect(url);
    var db = mongoose.connection;
    console.log(url);
