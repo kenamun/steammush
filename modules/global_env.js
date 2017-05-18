@@ -17,7 +17,7 @@ module.exports = setGlobalEnv;
  * @param {Function} cb A callback to signal the work is done
  */
 function connectToDb(cb) {
-   mongoose.connect('mongodb://' + process.env.IP + '/mush_##');
+   mongoose.connect('mongodb://localhost/mush_##');
    var db = mongoose.connection;
    db.on('error', console.error.bind(console, 'connection error:'));
    db.once('open', function() {
