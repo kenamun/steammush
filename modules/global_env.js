@@ -20,7 +20,7 @@ function connectToDb(cb) {
     var url = 'mongodb://localhost/mush_production';
    mongoose.connect(url);
    var db = mongoose.connection;
-   console.log(url);
+   log.info('url: ' + url);
    db.on('error', console.error.bind(console, 'connection error:'));
    db.once('open', function() {
      global.mush.db = db;
@@ -28,7 +28,7 @@ function connectToDb(cb) {
      if (cb)
        cb();    
    });
-   console.log("connectToDb finish");
+   log.info("connectToDb finish");
         
 }
 
