@@ -17,8 +17,10 @@ module.exports = setGlobalEnv;
  * @param {Function} cb A callback to signal the work is done
  */
 function connectToDb(cb) {
-   mongoose.connect('mongodb://localhost/mush_##');
+    var url = 'mongodb://localhost/mush_##';
+   mongoose.connect(url);
    var db = mongoose.connection;
+   console.log(url);
    db.on('error', console.error.bind(console, 'connection error:'));
    db.once('open', function() {
      global.mush.db = db;
@@ -26,6 +28,7 @@ function connectToDb(cb) {
      if (cb)
        cb();    
    });
+   console.log("connectToDb finish");
         
 }
 

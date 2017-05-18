@@ -39,9 +39,8 @@ Connection.prototype.setSocketEvents = function() {
     });
 
     this.socket.on('data', function(data) {
-        //self.server.handleInput(self, data);
+        self.server.handleInput(self, data);
         // temporarily uncommented.  We will just echo to test
-        socket.write(data);
     });
 
     this.socket.on('close', function(data) {
