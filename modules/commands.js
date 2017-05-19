@@ -56,7 +56,7 @@ Commands.prototype.connect = function(cmdEntry) {
     
     // Player is loaded by both name
     
-    User.findOne({ 'name' :  playerName }, function(err, user) {
+    Player.findOne({ 'name' :  playerName }, function(err, user) {
         // Check password validity of player exists
     });
     if (!player || !player.validPassword(password)) {
