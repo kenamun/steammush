@@ -38,6 +38,7 @@ function seedDb(cb) {
                 process.exit(2);
                 return;
             }
+            log.info('Finished creating god and void.');
             cb();
         }
     );

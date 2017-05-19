@@ -24,7 +24,7 @@ module.exports = function() {
 function Factory() {
 }
 
-function createTheVoid() {
+Factory.prototype.createTheVoid = function(cb) {
     // Setup initial variables
     log.info("Initializing Void...");
     var name = 'The Void';
@@ -38,14 +38,17 @@ function createTheVoid() {
     })
     
     room.save(function(err){
-        log.error("Error creating void room.");
+        if(err) {
+            log.error("Error creating void room.");
+            cb(err);
+        }
     });
         
 
     
 }
 
-function createGod() {
+Factory.prototype.createGod = function(cb) {
     log.info("Initializing god...");
     var god = new PlayerSchema();
     god.name = 'Admin';
@@ -53,7 +56,11 @@ function createGod() {
     god.password = god.generatehash('pass');
     
     god.save(function(err) {
-       log.error("Error creating admin user."); 
+        if(err)
+        {
+            log.error("Error creating admin user."); 
+            cb(err);
+        }
     });
     
 }
