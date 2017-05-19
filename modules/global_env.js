@@ -45,6 +45,7 @@ function setGlobalEnv(cb) {
     global.inspect = global.util.inspect;
     global.assert = require('assert');
     global.mush_utils = require('./mush_utils');
+    global.mush.Factory = require('./factory')();
     global.log = mush_utils.createLogger();
     global.is = require('is2');
     global.mush.PlayerDir = require('./player_dir')();

@@ -51,24 +51,15 @@ Commands.prototype.connect = function(cmdEntry) {
     var password = cmdEntry.cmdAry[2];
     assert.ok(is.nonEmptyStr(playerName));
     assert.ok(is.nonEmptyStr(password));
-    var Player = require('./models/player');
-    
-    // Load our player model instead here
+    var Player = require('../models/player');
     
     
-    log.error('player instanceof Player = %s', player instanceof Player);
-    log.error('typeof player %s', typeof player);
-    log.error('player.hash %s', player.hash);
-    console.error('player',player);
-    assert.ok(is.nonEmptyObj(player));
-    assert.ok(is.defined(player.data.hash));
-    log.warn('player %j', player);
     // Player is loaded by both name
     
     User.findOne({ 'name' :  playerName }, function(err, user) {
         // Check password validity of player exists
     });
-    if (!player || player.data.hash !== hash) {
+    if (!player || !player.validPassword(password)) {
         cmdEntry.conn.socket.write('Either the password is incorrect or there is no'+
                                   ' player with that name.\n');
     } else {

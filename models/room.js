@@ -5,7 +5,10 @@ var mongoose = require('mongoose');
 var room = mongoose.Schema({
   	'name': { type: String },
     'description': { type: String },
-    'outcomes': [{toRoom: String, exit: String}]
+    'exits': [{toRoom: String, exitName: String}],
+    'roomNo': { type: String },
+    'inventory': [itemID: type: mongoose.Schema.Types.ObjectId, ref: 'item']
+    
   });
 
   room.virtual('id')

@@ -24,6 +24,22 @@ function startTheMush() {
  * @param {Function} cb Callback of type fn(Error)
  */
 function seedDb(cb) {
+    // Check for start room.  If it doesn't exist?  Let's make it!  And add in a wizard.
+    if (!mush.db.collection('rooms').count() > 0)  return cb();
+    
+     async.parallel([
+            mush.Factory.createTheVoid,
+            mush.Factory.createGod
+        ],
+        function(err) {
+            if (err) {
+                console.error(err);
+                process.exit(2);
+                return;
+            }
+            cb();
+        }
+    );
     cb();
 }
 
