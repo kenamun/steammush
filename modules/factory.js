@@ -53,7 +53,7 @@ Factory.prototype.createGod = function(cb) {
     var god = new PlayerSchema();
     god.name = 'Admin';
     god.role = 4;
-    god.password = god.generatehash('pass');
+    god.password = god.generateHash('pass');
     
     god.save(function(err) {
         if(err)

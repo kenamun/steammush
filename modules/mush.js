@@ -26,11 +26,14 @@ function startTheMush() {
 function seedDb(cb) {
     // Check for start room.  If it doesn't exist?  Let's make it!  And add in a wizard.
     log.info('Count of rooms: ' + mush.db.collection('rooms').count())
-    if (mush.db.collection('rooms').count() > 0)  return cb();
+    mush.db.collection('rooms').count({}, function(err, c) {
+        if(c == 0)
+            return cb();
+    });
     log.info('Creating void and god.');
      async.parallel([
-            mush.Factory.createTheVoid,
-            mush.Factory.createGod
+            mush.Factory.createTheVoid(),
+            mush.Factory.createGod()
         ],
         function(err) {
             if (err) {
@@ -42,6 +45,7 @@ function seedDb(cb) {
             cb();
         }
     );
+    
     cb();
 }
 
