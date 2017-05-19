@@ -4,7 +4,7 @@
  */
 
 'use strict';
-var Obj = require('./object');
+
 var PlayerSchema = require('../models/player');
 var RoomSchema = require('../models/room');
 
