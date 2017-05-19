@@ -5,6 +5,7 @@
 
 'use strict';
 exports.Commands = Commands;
+var PlayerSchema = require('../models/player');
 
 /**
  * Create the commands object.
@@ -51,20 +52,20 @@ Commands.prototype.connect = function(cmdEntry) {
     var password = cmdEntry.cmdAry[2];
     assert.ok(is.nonEmptyStr(playerName));
     assert.ok(is.nonEmptyStr(password));
-    var Player = require('../models/player');
+    
     
     
     // Player is loaded by both name
     
-    Player.findOne({ 'name' :  playerName }, function(err, user) {
+    PlayerSchema.findOne({ 'name' :  playerName }, function(err, user) {
         // Check password validity of player exists
     });
-    if (!player || !player.validPassword(password)) {
+    if (!PlayerSchema || !PlayerSchema.validPassword(password)) {
         cmdEntry.conn.socket.write('Either the password is incorrect or there is no'+
                                   ' player with that name.\n');
     } else {
-        cmdEntry.conn.login(player, cmdEntry.conn.socket);
-        mush.Server.queCmdOutput(cmdEntry, player.name+' has connected.');
+        cmdEntry.conn.login(PlayerSchema, cmdEntry.conn.socket);
+        mush.Server.queCmdOutput(cmdEntry, PlayerSchema.name+' has connected.');
     }
 };
 

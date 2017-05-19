@@ -26,6 +26,7 @@ function Factory() {
 
 function createTheVoid() {
     // Setup initial variables
+    log.info("Initializing Void...");
     var name = 'The Void';
     var description = 'A meaningless existance.';
     var roomNo = 'AD 00 00';
@@ -37,16 +38,15 @@ function createTheVoid() {
     })
     
     room.save(function(err){
-        
+        log.error("Error creating void room.");
     });
         
-        item.save(function(err) {
-           log.error("Error creating void room.");
-        });
+
     
 }
 
 function createGod() {
+    log.info("Initializing god...");
     var god = new PlayerSchema();
     god.name = 'Admin';
     god.role = 4;
