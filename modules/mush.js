@@ -27,26 +27,30 @@ function seedDb(cb) {
     // Check for start room.  If it doesn't exist?  Let's make it!  And add in a wizard.
     log.info('Count of rooms: ' + mush.db.collection('rooms').count())
     mush.db.collection('rooms').count({}, function(err, c) {
+        log.info('Count of rooms: ' + c);
         if(c == 0)
             return cb();
-    });
-    log.info('Creating void and god.');
-     async.parallel([
-            mush.Factory.createTheVoid(),
-            mush.Factory.createGod()
-        ],
-        function(err) {
-            if (err) {
-                console.error(err);
-                process.exit(2);
-                return;
-            }
-            log.info('Finished creating god and void.');
-            cb();
-        }
-    );
+        
+        
     
-    cb();
+        log.info('Creating void and god.');
+         async.parallel([
+                mush.Factory.createTheVoid(),
+                mush.Factory.createGod()
+            ],
+            function(err) {
+                if (err) {
+                    console.error(err);
+                    process.exit(2);
+                    return;
+                }
+                log.info('Finished creating god and void.');
+                cb();
+            }
+        );
+        
+        cb();
+    });
 }
 
 /**
